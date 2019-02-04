@@ -26,8 +26,8 @@ namespace AplicacionDatos.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Sales;Integrated Security=True" +
-            ";Pooling=False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=aplicacion-pedidos.database.windows.net;Initial Catalog=AppPedidos;Pe" +
+            "rsist Security Info=True;User ID=Adrian;Password=ABC.1234")]
         public string connString {
             get {
                 return ((string)(this["connString"]));

@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textCustomerName = new System.Windows.Forms.TextBox();
             this.textCustomerID = new System.Windows.Forms.TextBox();
+            this.textCustomerName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnCreateAccount = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.numOrderAmount = new System.Windows.Forms.NumericUpDown();
             this.dtpOrderDate = new System.Windows.Forms.DateTimePicker();
+            this.numOrderAmount = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnPlaceOrder = new System.Windows.Forms.Button();
             this.btnAddAnotherAccount = new System.Windows.Forms.Button();
             this.btnAddFinish = new System.Windows.Forms.Button();
@@ -60,14 +60,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Agregar cuenta";
             // 
-            // label1
+            // textCustomerID
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre del cliente:";
+            this.textCustomerID.Location = new System.Drawing.Point(141, 70);
+            this.textCustomerID.Name = "textCustomerID";
+            this.textCustomerID.ReadOnly = true;
+            this.textCustomerID.Size = new System.Drawing.Size(100, 20);
+            this.textCustomerID.TabIndex = 3;
+            // 
+            // textCustomerName
+            // 
+            this.textCustomerName.Location = new System.Drawing.Point(120, 35);
+            this.textCustomerName.Name = "textCustomerName";
+            this.textCustomerName.Size = new System.Drawing.Size(121, 20);
+            this.textCustomerName.TabIndex = 2;
             // 
             // label2
             // 
@@ -78,20 +84,14 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Identificador del cliente:";
             // 
-            // textCustomerName
+            // label1
             // 
-            this.textCustomerName.Location = new System.Drawing.Point(120, 35);
-            this.textCustomerName.Name = "textCustomerName";
-            this.textCustomerName.Size = new System.Drawing.Size(121, 20);
-            this.textCustomerName.TabIndex = 2;
-            // 
-            // textCustomerID
-            // 
-            this.textCustomerID.Location = new System.Drawing.Point(141, 70);
-            this.textCustomerID.Name = "textCustomerID";
-            this.textCustomerID.ReadOnly = true;
-            this.textCustomerID.Size = new System.Drawing.Size(100, 20);
-            this.textCustomerID.TabIndex = 3;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(98, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Nombre del cliente:";
             // 
             // btnCreateAccount
             // 
@@ -116,23 +116,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Crear pedido";
             // 
-            // label3
+            // dtpOrderDate
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Cantidad de pedido:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 68);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Fecha de pedido:";
+            this.dtpOrderDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpOrderDate.Location = new System.Drawing.Point(138, 61);
+            this.dtpOrderDate.Name = "dtpOrderDate";
+            this.dtpOrderDate.Size = new System.Drawing.Size(123, 20);
+            this.dtpOrderDate.TabIndex = 3;
             // 
             // numOrderAmount
             // 
@@ -146,13 +136,23 @@
             this.numOrderAmount.Size = new System.Drawing.Size(120, 20);
             this.numOrderAmount.TabIndex = 2;
             // 
-            // dtpOrderDate
+            // label4
             // 
-            this.dtpOrderDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpOrderDate.Location = new System.Drawing.Point(138, 61);
-            this.dtpOrderDate.Name = "dtpOrderDate";
-            this.dtpOrderDate.Size = new System.Drawing.Size(123, 20);
-            this.dtpOrderDate.TabIndex = 3;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Fecha de pedido:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(102, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Cantidad de pedido:";
             // 
             // btnPlaceOrder
             // 

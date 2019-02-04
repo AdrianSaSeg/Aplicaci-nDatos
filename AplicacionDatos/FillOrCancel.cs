@@ -61,7 +61,7 @@ namespace AplicacionDatos
                 using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
                 {
                     // Define una cadena de consulta t-SQL que tiene un parámetro para el ID de pedido.
-                    const string sql = "SELECT * FROM Sales.Orders WHERE orderID = @orderID";
+                    const string sql = "SELECT * FROM AppPedidos.Orders WHERE orderID = @orderID";
 
                     // Crea un objeto SqlCommand.
                     using (SqlCommand sqlCommand = new SqlCommand(sql, connection))
@@ -116,7 +116,7 @@ namespace AplicacionDatos
                 using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
                 {
                     // Crea el objeto SqlCommand y lo instancia como un procedimiento almacenado.
-                    using (SqlCommand sqlCommand = new SqlCommand("Sales.uspCancelOrder", connection))
+                    using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.uspCancelOrder", connection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
 
@@ -158,7 +158,7 @@ namespace AplicacionDatos
                 using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
                 {
                     // Crea un SqlCommand y lo instancia como un procedimiento almacenado.
-                    using (SqlCommand sqlCommand = new SqlCommand("Sales.uspFillOrder", connection))
+                    using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.uspFillOrder", connection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
 

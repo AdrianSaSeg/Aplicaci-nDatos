@@ -85,7 +85,7 @@ namespace AplicacionDatos
                 using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
                 {
                     // Crea un comando Sql y lo instancia como un procedimiento almacenado.
-                    using (SqlCommand sqlCommand = new SqlCommand("Sales.uspNewCustomer", connection))
+                    using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.uspNewCustomer", connection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         
@@ -135,7 +135,7 @@ namespace AplicacionDatos
                 using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
                 {
                     // Crea un comando Sql y lo instancia como un procedimiento almacenado.
-                    using (SqlCommand sqlCommand = new SqlCommand("Sales.uspPlaceNewOrder", connection))
+                    using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.uspPlaceNewOrder", connection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
 
