@@ -61,19 +61,26 @@ namespace AplicacionDatos
                 using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
                 {
                     // Define una cadena de consulta t-SQL que tiene un parámetro para el ID de pedido.
-                    const string sql = "SELECT * FROM AppPedidos.Orders WHERE orderID = @orderID";
+                    //const string sql = "SELECT * FROM AppPedidos.Orders WHERE orderID = @orderID";
 
-                    // Crea un objeto SqlCommand.
-                    using (SqlCommand sqlCommand = new SqlCommand(sql, connection))
+                    // Crea un objeto SqlCommand usando un procedimineto almacenado.
+                    using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.MostrarPedido", connection))
                     {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
                         // Define el parámetro @orderID y le establece un valor.
-                        sqlCommand.Parameters.Add(new SqlParameter("@orderID", SqlDbType.Int));
-                        sqlCommand.Parameters["@orderID"].Value = parsedOrderID;
+                        sqlCommand.Parameters.Add(new SqlParameter("@ID_Pedido", SqlDbType.Int));
+                        sqlCommand.Parameters["@ID_Pedido"].Value = parsedOrderID;
 
                         try
                         {
                             connection.Open();
-       
+
+                            //////// UPDATE, ALMACENO LOS DATOS EN UNA LISTA: List<Orders>////////
+
+                            // Creo la lista
+                            List<Orders> lista_orders = new List<Orders>();
+
                             // Ejecuta la consulta con ExecuteReader().
                             using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
                             {
@@ -86,31 +93,28 @@ namespace AplicacionDatos
                                  // Muestra los datos del DataTable en el DataGridView.
                                  this.dgvCustomerOrders.DataSource = dataTable; */
 
-                                //////// UPDATE, ALMACENO LOS DATOS EN UNA LISTA: List<Orders>////////
-
-                                // Creo la lista
-                                List<Orders> lista_orders = new List<Orders>();
-
+                                
                                 // Mientras lee los datos del SqlDataReader, añade sus elementos a la lista
                                 while (dataReader.Read())
                                 {
-                                    Orders items = new Orders()
+                                    lista_orders.Add(new Orders()            
                                     {
                                         CustomerID = dataReader.GetInt32(dataReader.GetOrdinal("CustomerID")),
                                         OrderID = dataReader.GetInt32(dataReader.GetOrdinal("OrderID")),
                                         OrderDate = dataReader.GetDateTime(dataReader.GetOrdinal("OrderDate")),
-                                        FilledDate = dataReader.GetDateTime(dataReader.GetOrdinal("FilledDate")),
+                                        FilledDate = (dataReader["FilledDate"] == DBNull.Value ? (DateTime?)null : (DateTime?)dataReader["FilledDate"]),
                                         Status = dataReader.GetString(dataReader.GetOrdinal("Status")),
                                         Amount = dataReader.GetInt32(dataReader.GetOrdinal("Amount"))
-                                    };
-
-                                    lista_orders.Add(items);
+                                    });
+                           
                                 }
-                                // y los añade
+                                // Los añade al datagrid
                                 this.dgvCustomerOrders.DataSource = lista_orders;
+        
                                 // Cierra el SqlDataReader.
                                 dataReader.Close();
                             }
+                            
                         }
                         catch
                         {
