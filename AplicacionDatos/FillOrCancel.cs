@@ -77,15 +77,37 @@ namespace AplicacionDatos
                             // Ejecuta la consulta con ExecuteReader().
                             using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
                             {
-                                // Crea un DataTable para guardar los datos recogidos.
-                                DataTable dataTable = new DataTable();
+                                /* // Crea un DataTable para guardar los datos recogidos.
+                                 DataTable dataTable = new DataTable();
 
-                                // Carga los datos desde el SqlDataReader en el DataTable.
-                                dataTable.Load(dataReader);
+                                 // Carga los datos desde el SqlDataReader en el DataTable.
+                                 dataTable.Load(dataReader);
 
-                                // Muestra los datos del DataTable en el DataGridView.
-                                this.dgvCustomerOrders.DataSource = dataTable;
+                                 // Muestra los datos del DataTable en el DataGridView.
+                                 this.dgvCustomerOrders.DataSource = dataTable; */
 
+                                //////// UPDATE, ALMACENO LOS DATOS EN UNA LISTA: List<Orders>////////
+
+                                // Creo la lista
+                                List<Orders> lista_orders = new List<Orders>();
+
+                                // Mientras lee los datos del SqlDataReader, añade sus elementos a la lista
+                                while (dataReader.Read())
+                                {
+                                    Orders items = new Orders()
+                                    {
+                                        CustomerID = dataReader.GetInt32(dataReader.GetOrdinal("CustomerID")),
+                                        OrderID = dataReader.GetInt32(dataReader.GetOrdinal("OrderID")),
+                                        OrderDate = dataReader.GetDateTime(dataReader.GetOrdinal("OrderDate")),
+                                        FilledDate = dataReader.GetDateTime(dataReader.GetOrdinal("FilledDate")),
+                                        Status = dataReader.GetString(dataReader.GetOrdinal("Status")),
+                                        Amount = dataReader.GetInt32(dataReader.GetOrdinal("Amount"))
+                                    };
+
+                                    lista_orders.Add(items);
+                                }
+                                // y los añade
+                                this.dgvCustomerOrders.DataSource = lista_orders;
                                 // Cierra el SqlDataReader.
                                 dataReader.Close();
                             }
