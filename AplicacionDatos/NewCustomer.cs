@@ -16,6 +16,7 @@ namespace AplicacionDatos
         // Creamos las variables para almacenar el valor de la tabla IDENTITY de la base de datos.
         private int parsedCustomerID;
         private int orderID;
+        private int Saldos;
 
         public NewCustomer()
         {
@@ -93,6 +94,10 @@ namespace AplicacionDatos
                         sqlCommand.Parameters.Add(new SqlParameter("@CustomerName", SqlDbType.NVarChar, 40));
                         sqlCommand.Parameters["@CustomerName"].Value = textCustomerName.Text;
 
+                        // Añade el parámetro para el procedimiento almacenado y le asigna el valor del numericUpDown
+                        sqlCommand.Parameters.Add(new SqlParameter("@Saldos", SqlDbType.Int));
+                        sqlCommand.Parameters["@Saldos"].Value = numericUpDown1.Value;
+
                         // Añade el parámetro de salida.
                         sqlCommand.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.Int));
                         sqlCommand.Parameters["@CustomerID"].Direction = ParameterDirection.Output;
@@ -162,16 +167,17 @@ namespace AplicacionDatos
 
                         try
                         {
-
+                          
                             // Abre la conexión.
                             connection.Open();
 
                             // Ejecuta el procedimiento almacenado.
                             sqlCommand.ExecuteNonQuery();
-
+                      
                             // Muestra el numero de pedidos.
                             this.orderID = (int)sqlCommand.Parameters["@RC"].Value;
                             MessageBox.Show("El número de pedido " + this.orderID + " ha sido entregado.");
+                                                                        
                         }
                         catch
                         {

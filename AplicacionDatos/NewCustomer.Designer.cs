@@ -42,27 +42,32 @@
             this.btnPlaceOrder = new System.Windows.Forms.Button();
             this.btnAddAnotherAccount = new System.Windows.Forms.Button();
             this.btnAddFinish = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOrderAmount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.textCustomerID);
             this.groupBox1.Controls.Add(this.textCustomerName);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(21, 26);
+            this.groupBox1.Location = new System.Drawing.Point(21, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(284, 100);
+            this.groupBox1.Size = new System.Drawing.Size(284, 145);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Agregar cuenta";
             // 
             // textCustomerID
             // 
-            this.textCustomerID.Location = new System.Drawing.Point(141, 70);
+            this.textCustomerID.Location = new System.Drawing.Point(141, 109);
             this.textCustomerID.Name = "textCustomerID";
             this.textCustomerID.ReadOnly = true;
             this.textCustomerID.Size = new System.Drawing.Size(100, 20);
@@ -78,7 +83,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 73);
+            this.label2.Location = new System.Drawing.Point(16, 112);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(119, 13);
             this.label2.TabIndex = 1;
@@ -109,7 +114,7 @@
             this.groupBox2.Controls.Add(this.numOrderAmount);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(21, 151);
+            this.groupBox2.Location = new System.Drawing.Point(21, 176);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(284, 105);
             this.groupBox2.TabIndex = 5;
@@ -156,7 +161,7 @@
             // 
             // btnPlaceOrder
             // 
-            this.btnPlaceOrder.Location = new System.Drawing.Point(350, 230);
+            this.btnPlaceOrder.Location = new System.Drawing.Point(350, 246);
             this.btnPlaceOrder.Name = "btnPlaceOrder";
             this.btnPlaceOrder.Size = new System.Drawing.Size(115, 26);
             this.btnPlaceOrder.TabIndex = 4;
@@ -166,7 +171,7 @@
             // 
             // btnAddAnotherAccount
             // 
-            this.btnAddAnotherAccount.Location = new System.Drawing.Point(317, 278);
+            this.btnAddAnotherAccount.Location = new System.Drawing.Point(317, 294);
             this.btnAddAnotherAccount.Name = "btnAddAnotherAccount";
             this.btnAddAnotherAccount.Size = new System.Drawing.Size(148, 26);
             this.btnAddAnotherAccount.TabIndex = 5;
@@ -176,7 +181,7 @@
             // 
             // btnAddFinish
             // 
-            this.btnAddFinish.Location = new System.Drawing.Point(49, 278);
+            this.btnAddFinish.Location = new System.Drawing.Point(49, 303);
             this.btnAddFinish.Name = "btnAddFinish";
             this.btnAddFinish.Size = new System.Drawing.Size(86, 26);
             this.btnAddFinish.TabIndex = 6;
@@ -184,11 +189,27 @@
             this.btnAddFinish.UseVisualStyleBackColor = true;
             this.btnAddFinish.Click += new System.EventHandler(this.btnAddFinish_Click);
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(121, 72);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 4;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 74);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Saldo inicial";
+            // 
             // NewCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 326);
+            this.ClientSize = new System.Drawing.Size(487, 354);
             this.Controls.Add(this.btnAddFinish);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnPlaceOrder);
@@ -202,6 +223,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOrderAmount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -222,5 +244,7 @@
         private System.Windows.Forms.Button btnPlaceOrder;
         private System.Windows.Forms.Button btnAddAnotherAccount;
         private System.Windows.Forms.Button btnAddFinish;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
