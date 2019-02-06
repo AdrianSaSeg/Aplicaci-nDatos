@@ -117,7 +117,7 @@ namespace AplicacionDatos
                             
                         }
                         catch
-                        {
+                        {                           
                             MessageBox.Show("El pedido solicitado puede no haber sido cargado en el formulario.");
                         }
                         finally
@@ -196,12 +196,27 @@ namespace AplicacionDatos
                         sqlCommand.Parameters.Add(new SqlParameter("@FilledDate", SqlDbType.DateTime, 8));
                         sqlCommand.Parameters["@FilledDate"].Value = dtpFillDate.Value;
 
+                        sqlCommand.Parameters.Add(new SqlParameter("@Saldo_Error", SqlDbType.Int));
+                        sqlCommand.Parameters["@Saldo_Error"].Direction = ParameterDirection.Output;
+                        
+
                         try
                         {
                             connection.Open();
 
                             // Ejecuta el procedimiento almacenado.
                             sqlCommand.ExecuteNonQuery();
+
+                            int codigo_error = (int)sqlCommand.Parameters["@Saldo_Error"].Value;
+
+                            if (codigo_error != 1)
+                            {
+                                MessageBox.Show("Pedido Confirmado");
+                            }
+                            else
+                            {
+                                MessageBox.Show("El saldo es insuficiente");
+                            }
                         }
                         catch
                         {

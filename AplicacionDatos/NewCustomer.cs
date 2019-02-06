@@ -15,8 +15,9 @@ namespace AplicacionDatos
     {        
         // Creamos las variables para almacenar el valor de la tabla IDENTITY de la base de datos.
         private int parsedCustomerID;
-        private int orderID;
-        private int Saldos;
+        private int orderID;       
+        public static string ID_cliente_seleccionado;
+        public static string nombre_cliente_seleccionado;
 
         public NewCustomer()
         {
@@ -144,6 +145,12 @@ namespace AplicacionDatos
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
 
+                        // Si he seleccionado un cliente ya creado, recupero su ID
+                        if (ID_cliente_seleccionado != null)
+                        {
+                            this.parsedCustomerID = Convert.ToInt32(ID_cliente_seleccionado);
+                        }
+
                         // Añade el parámetro de entrada @CustomerID, el cual ha sido obtenido de uspNewCustomer.
                         sqlCommand.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.Int));
                         sqlCommand.Parameters["@CustomerID"].Value = this.parsedCustomerID;
@@ -206,6 +213,16 @@ namespace AplicacionDatos
         private void btnAddFinish_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FormSelec formSelec = new FormSelec();
+            formSelec.ShowDialog();
+
+            textCustomerID.Text = ID_cliente_seleccionado;
+            textCustomerName.Text = nombre_cliente_seleccionado;
+            
         }
     }
 }
