@@ -67,6 +67,33 @@ namespace AplicacionDatos
                 return true;
             }
         }
+
+        private bool SeleccionaDataGrid()
+        {
+            // Si he seleccionado alguna CELDA del GRID.
+            if (dgvCustomerOrders.SelectedCells.Count > 0)
+            {
+                // Obtengo el ID de la fila seleccionada
+                int selectedRowIndex = dgvCustomerOrders.SelectedCells[0].ColumnIndex;
+                
+                // Obtengo el valor de la fila seleccionada.
+                DataGridViewRow selectedRow = dgvCustomerOrders.Rows[selectedRowIndex];
+                
+                // Extraigo el valor de dicha FILA con la columna OrderID.
+                parsedOrderID = Convert.ToInt32(selectedRow.Cells["OrderID"].Value);
+                
+                // Convierte el texto del text box a entero para mandarlo a la base de datos.
+                parsedClienteID = (int)comboBox1.SelectedValue;
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Error, seleccione la CELDA del datagrid correspondiente al ID del pedido que quiera rellenar");
+                parsedOrderID = 0;
+                parsedClienteID = (int)comboBox1.SelectedValue;
+                return false;
+            }
+        }
         /// <summary>
         /// Ejecuta una orden t-SQL SELECT para obtener datos de pedido de
         /// un ID de pedido específico, después lo muestra en el DataGridView del formulario.
@@ -196,7 +223,7 @@ namespace AplicacionDatos
         /// </summary>
         private void btnFillOrder_Click(object sender, EventArgs e)
         {
-            if (IsOrderIDValid())
+            if (SeleccionaDataGrid())
             {
                 // Crea la conexión.
                 using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
@@ -214,8 +241,13 @@ namespace AplicacionDatos
                         sqlCommand.Parameters.Add(new SqlParameter("@FilledDate", SqlDbType.DateTime, 8));
                         sqlCommand.Parameters["@FilledDate"].Value = dtpFillDate.Value;
 
-                        sqlCommand.Parameters.Add(new SqlParameter("@Saldo_Error", SqlDbType.Int));
-                        sqlCommand.Parameters["@Saldo_Error"].Direction = ParameterDirection.Output;
+                        // Obtengo el parámetro @Saldo_a_la_app desde la base de datos
+                        sqlCommand.Parameters.Add(new SqlParameter("@Saldo_a_la_app", SqlDbType.Int));
+                        sqlCommand.Parameters["@Saldo_a_la_app"].Direction = ParameterDirection.Output;
+                        
+                        // Obtengo el parámetro @Codigo_Error desde la base de datos
+                        sqlCommand.Parameters.Add(new SqlParameter("@Codigo_Error", SqlDbType.Int));
+                        sqlCommand.Parameters["@Codigo_Error"].Direction = ParameterDirection.Output;
                         
 
                         try
@@ -224,10 +256,11 @@ namespace AplicacionDatos
 
                             // Ejecuta el procedimiento almacenado.
                             sqlCommand.ExecuteNonQuery();
+                            
+                            int saldo = (int)sqlCommand.Parameters["@Saldo_a_la_app"].Value;
+                            int codigo_error = (int)sqlCommand.Parameters["@Codigo_Error"].Value;
 
-                            int codigo_error = (int)sqlCommand.Parameters["@Saldo_Error"].Value;
-
-                            if (codigo_error != 1)
+                            if (codigo_error != -1)
                             {
                                 MessageBox.Show("Pedido Confirmado");
                             }
@@ -236,9 +269,9 @@ namespace AplicacionDatos
                                 MessageBox.Show("El saldo es insuficiente");
                             }
                         }
-                        catch
+                        catch(Exception ex)
                         {
-                            MessageBox.Show("La operación de rellenado no ha sido completada.");
+                            MessageBox.Show($"La operación de rellenado no ha sido completada.{ex.Message}");
                         }
                         finally
                         {
@@ -325,6 +358,13 @@ namespace AplicacionDatos
                     }
                 }
             }
+            
+        }
+
+        private void dgvCustomerOrders_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+            SeleccionaDataGrid();
             
         }
     }

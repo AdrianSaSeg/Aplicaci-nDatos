@@ -115,6 +115,7 @@
             this.dgvCustomerOrders.RowHeadersVisible = false;
             this.dgvCustomerOrders.Size = new System.Drawing.Size(365, 88);
             this.dgvCustomerOrders.TabIndex = 6;
+            this.dgvCustomerOrders.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerOrders_CellClick);
             // 
             // btnCancelOrder
             // 
