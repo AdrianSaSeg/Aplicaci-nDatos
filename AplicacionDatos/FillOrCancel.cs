@@ -16,6 +16,7 @@ namespace AplicacionDatos
     {
         // Crea una variable para almacenar el valor del ID de pedido. 
         private int parsedOrderID;
+        private int parsedClienteID;
 
         public FillOrCancel()
         {
@@ -50,6 +51,22 @@ namespace AplicacionDatos
             }
         }
 
+        private bool IsClientIDValid()
+        {
+            // Comprueba que el combobox de ID de cliente no esté vacío.
+            if (comboBox1.Text == "")
+            {
+                MessageBox.Show("Por favor, especifique el ID del pedido.");
+                return false;
+            }
+          
+            else
+            {
+                // Convierte el texto del text box a entero para mandarlo a la base de datos.
+                parsedClienteID = (int)comboBox1.SelectedValue;
+                return true;
+            }
+        }
         /// <summary>
         /// Ejecuta una orden t-SQL SELECT para obtener datos de pedido de
         /// un ID de pedido específico, después lo muestra en el DataGridView del formulario.
@@ -64,6 +81,7 @@ namespace AplicacionDatos
                     //const string sql = "SELECT * FROM AppPedidos.Orders WHERE orderID = @orderID";
 
                     // Crea un objeto SqlCommand usando un procedimineto almacenado.
+                   // using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.MostrarPedido", connection))
                     using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.MostrarPedido", connection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -71,7 +89,7 @@ namespace AplicacionDatos
                         // Define el parámetro @orderID y le establece un valor.
                         sqlCommand.Parameters.Add(new SqlParameter("@ID_Pedido", SqlDbType.Int));
                         sqlCommand.Parameters["@ID_Pedido"].Value = parsedOrderID;
-
+                        
                         try
                         {
                             connection.Open();
@@ -93,11 +111,11 @@ namespace AplicacionDatos
                                  // Muestra los datos del DataTable en el DataGridView.
                                  this.dgvCustomerOrders.DataSource = dataTable; */
 
-                                
+
                                 // Mientras lee los datos del SqlDataReader, añade sus elementos a la lista
                                 while (dataReader.Read())
                                 {
-                                    lista_orders.Add(new Orders()            
+                                    lista_orders.Add(new Orders()
                                     {
                                         CustomerID = dataReader.GetInt32(dataReader.GetOrdinal("CustomerID")),
                                         OrderID = dataReader.GetInt32(dataReader.GetOrdinal("OrderID")),
@@ -106,18 +124,18 @@ namespace AplicacionDatos
                                         Status = dataReader.GetString(dataReader.GetOrdinal("Status")),
                                         Amount = dataReader.GetInt32(dataReader.GetOrdinal("Amount"))
                                     });
-                           
+
                                 }
                                 // Los añade al datagrid
                                 this.dgvCustomerOrders.DataSource = lista_orders;
-        
+
                                 // Cierra el SqlDataReader.
                                 dataReader.Close();
                             }
-                            
+
                         }
                         catch
-                        {                           
+                        {
                             MessageBox.Show("El pedido solicitado puede no haber sido cargado en el formulario.");
                         }
                         finally
@@ -238,6 +256,76 @@ namespace AplicacionDatos
         private void btnFinishOrder_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void FillOrCancel_Load(object sender, EventArgs e)
+        {
+            // TODO: esta línea de código carga datos en la tabla 'appPedidosDataSet.Customer' Puede moverla o quitarla según sea necesario.
+            this.customerTableAdapter.Fill(this.appPedidosDataSet.Customer);
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (IsClientIDValid())
+            {
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.connString))
+                {
+
+                    using (SqlCommand sqlCommand = new SqlCommand("AppPedidos.MostrarPedidosPorCliente", connection))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        sqlCommand.Parameters.Add(new SqlParameter("@ID_Cliente", SqlDbType.Int));
+                        sqlCommand.Parameters["@ID_Cliente"].Value = parsedClienteID;
+                        try
+                        {
+                            connection.Open();
+
+                            /////// ALMACENO LOS DATOS EN UNA LISTA: List<Orders>////////
+
+                            // Creo la lista
+                            List<Orders> lista_orders = new List<Orders>();
+
+                            // Ejecuta la consulta con ExecuteReader().
+                            using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                            {
+
+                                // Mientras lee los datos del SqlDataReader, añade sus elementos a la lista
+                                while (dataReader.Read())
+                                {
+                                    lista_orders.Add(new Orders()
+                                    {
+                                        CustomerID = dataReader.GetInt32(dataReader.GetOrdinal("CustomerID")),
+                                        OrderID = dataReader.GetInt32(dataReader.GetOrdinal("OrderID")),
+                                        OrderDate = dataReader.GetDateTime(dataReader.GetOrdinal("OrderDate")),
+                                        FilledDate = (dataReader["FilledDate"] == DBNull.Value ? (DateTime?)null : (DateTime?)dataReader["FilledDate"]),
+                                        Status = dataReader.GetString(dataReader.GetOrdinal("Status")),
+                                        Amount = dataReader.GetInt32(dataReader.GetOrdinal("Amount"))
+                                    });
+
+                                }
+                                // Los añade al datagrid
+                                this.dgvCustomerOrders.DataSource = lista_orders;
+
+                                // Cierra el SqlDataReader.
+                                dataReader.Close();
+                            }
+
+                        }
+                        catch
+                        {
+                            MessageBox.Show("El pedido solicitado puede no haber sido cargado en el formulario.");
+                        }
+                        finally
+                        {
+                            // Cierra la conexión.
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+            
         }
     }
 }
